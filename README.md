@@ -5,7 +5,7 @@
 但是现实世界的很多图片通常包含不只一个物体，此时如果使用图像分类模型为图像分配一个单一标签其实是非常粗糙的，并不准确。对于这样的情况，就需要目标检测模型
 * 目标检测模型可以识别一张图片的多个物体，并可以定位出不同物体（给出边界框）。
 目标检测在很多场景有用，如无人驾驶和安防系统等。
-![Image](https://ss.csdn.net/p?http://mmbiz.qpic.cn/mmbiz_png/iaTa8ut6HiawDhWYblXp7Uqo1KKTNzCzzRITWA48CsUGcnVUiayPmfGW00KF7ia6nXPguAYLVpicTYZ3EMOusgT5Y5w/640?wx_fmt=png&wxfrom=5&wx_lazy=1")
+![Image](http://mmbiz.qpic.cn/mmbiz_png/iaTa8ut6HiawDhWYblXp7Uqo1KKTNzCzzRITWA48CsUGcnVUiayPmfGW00KF7ia6nXPguAYLVpicTYZ3EMOusgT5Y5w/640?wx_fmt=png&wxfrom=5&wx_lazy=1)
 
 ## 目标检测方法
 https://www.zhihu.com/question/53438706
