@@ -77,7 +77,7 @@ https://blog.csdn.net/l7H9JA4/article/details/79620247
 ### 以上算法都是two stage检测算法，其将检测问题划分为两个阶段，首先产生候选区域（region proposals），然后对候选区域分类（一般还需要对位置精修）。与之相对的是one stage检测算法，这类算法不需要region proposal阶段，直接产生物体的类别概率和位置坐标值。二者相比较而言，two stage检测算法胜在精度，one stage检测算法胜在速度，但随着研究的发展，两类算法都在两个方面做改进。
 
 
-![Image](https://ss.csdn.net/p?https://mmbiz.qpic.cn/mmbiz_png/iaTa8ut6HiawDhWYblXp7Uqo1KKTNzCzzRBdUhnZ3XyRiaiaLd0F18JbUk9WUJSlKLS9w5XjW5cKYwz4CjBpial4SUw/640?wx_fmt=png)
+![Image](https://s2.ax1x.com/2019/02/14/kDFXVO.png)
 ### One stage算法： 不需要region proposal阶段，直接产生物体的类别概率和位置坐标值
 #### 1.(2015)yolo : you only look once： Unified, Real-Time Object Detection
 * 论文地址：https://arxiv.org/abs/1506.02640
