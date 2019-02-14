@@ -40,7 +40,7 @@ https://blog.csdn.net/l7H9JA4/article/details/79620247
 * 详细介绍：一张图片，R-CNN基于selective search方法大约生成2000个候选区域，然后每个候选区域被resize成固定大小227x227大小后送入一个CNN模型中，最后得到一个4096-d的特征向量。然后该特征向量送入一个多类别SVM分类器中，预测出候选区域中所含物体的属于每个类的概率值。每个类别训练一个SVM分类器，从特征向量中推断其属于该类别的概率大小。为了提升定位准确性，R-CNN最后又训练了一个边界框回归模型。
 * 实现细节：R-CNN模型的训练是多管道的，CNN模型首先使用2012 ImageNet中的图像分类竞赛数据集进行预训练。然后在检测数据集上对CNN模型进行finetuning，其中那些与真实框的IoU大于0.5的候选区域作为正样本，剩余的候选区域是负样本（背景）。共训练两个版本，第一版本使用2012 PASCAL VOC数据集，第二个版本使用2013 ImageNet中的目标检测数据集。最后，对数据集中的各个类别训练SVM分类器（注意SVM训练样本与CNN模型的funetuning不太一样，只有IoU小于0.3的才被看成负样本）
 * 优缺点：不用手动提取特征，使用CNN网络自动提取特征，将目标检测问题转换为分类问题；每个候选区域都要送入CNN模型计算特征向量，非常费时，固定图像输入大小
-![Image](https://ss.csdn.net/p?https://mmbiz.qpic.cn/mmbiz_png/iaTa8ut6HiawDhWYblXp7Uqo1KKTNzCzzRzjuMflgMIt4jOa51A4XfzdpUVL7bia3ds6Irs3xghbicvvzgTwNuLsRA/640?wx_fmt=png)
+![Image](https://s2.ax1x.com/2019/02/14/kDizj0.jpg)
 
 #### 2.（2014）SPP-net:Spatial Pyramid Pooling in Deep Convolutional Networks for Visual Recognition
 * 论文地址：https://arxiv.org/pdf/1406.4729.pdf
@@ -48,7 +48,7 @@ https://blog.csdn.net/l7H9JA4/article/details/79620247
 * 主要内容：提出空间金字塔池化层（Spatial Pyramid Pooling Layer, SPP），SSP-net在CNN层与全连接层之间插入了空间金字塔池化层来解决图像分类中要求输入图片固定大小可能带来识别精度损失的问题，之后过程与RCNN类似
 * 实现细节：在R-CNN中，由于每个候选区域大小是不同，所以需要先resize成固定大小才能送入CNN网络，SPP-net正好可以解决这个问题。继续上前一步，就是R-CNN每次都要挨个使用CNN模型计算各个候选区域的特征，这是极其费时的，不如直接将整张图片送入CNN网络，然后抽取候选区域的对应的特征区域，采用SPP层，这样可以大大减少计算量，并提升速度。基于SPP层的R-CNN模型在准确度上提升不是很大，但是速度却比原始R-CNN模型快24-102倍。
 * 优缺点：改善RCNN网络需要固定图像输入尺寸的问题，加快了模型的速度。
-![Image](https://ss.csdn.net/p?https://mmbiz.qpic.cn/mmbiz_png/iaTa8ut6HiawDhWYblXp7Uqo1KKTNzCzzR65mItUXyBFqVYibEy9efXXDvg0aFXJg1rr1Am6zVbInb9WQ7ekB4sLw/640?wx_fmt=pngg)
+![Image](https://s2.ax1x.com/2019/02/14/kDFYvt.png)
 
 #### 3.（2015）Fast R-CNN：Fast Region-based Convolutional Network
 * 论文地址：https://arxiv.org/pdf/1504.08083.pdf
@@ -56,7 +56,7 @@ https://blog.csdn.net/l7H9JA4/article/details/79620247
 * 主要内容：借鉴SPP-net减少候选区域使用CNN模型提取特征向量所消耗时间的思想，提出ROI层以得到固定大小的特征图
 * 实现细节：其CNN模型的输入是整张图片，然后结合RoIs（Region of Interests）pooling和Selective Search方法从CNN得到的特征图中提取各个候选区域的所对应的特征。对于每个候选区域，使用RoI pooling层来从CNN特征图中得到一个固定长和宽的特征图（长和宽是超参数，文中选用7* 7），RoI pooling的原理很简单，其根据候选区域按比例从CNN特征图中找到对应的特征区域，然后将其分割成几个子区域（根据要输出的特征图的大小），然后在每个子区域应用max pooling，从而得到固定大小的特征图。
 * 优缺点：采用ROI层减少了候选区域提取特征消耗的时间，另外采用了softmax分类器而不是SVM分类器，训练过程较R-CNN而言更加简单
-![Image](https://ss.csdn.net/p?https://mmbiz.qpic.cn/mmbiz_png/iaTa8ut6HiawDhWYblXp7Uqo1KKTNzCzzRLsWotlrBVXPRjw5pr1MjOKOkSuDK04sib5pvsFlIGlnC2iaDlICSn3aA/640?wx_fmt=png)
+![Image](https://s2.ax1x.com/2019/02/14/kDFNKP.png)
 
 #### 4.(2016) Faster R-CNN: The Faster Region-based Convolutional Network
 * 论文地址：https://arxiv.org/pdf/1506.01497.pdf
@@ -64,7 +64,7 @@ https://blog.csdn.net/l7H9JA4/article/details/79620247
 * 主要内容：引入了RPN (Region Proposal Network)直接产生候选区域，Faster R-CNN可以看成是RPN和Fast R-CNN模型的组合体
 * 实现细节：对于RPN网络，先采用一个CNN模型接收整张图片并提取特征图。然后在这个特征图上采用一个N* N（文中是3* 3）的滑动窗口，对于每个滑窗位置都映射一个低维度的特征（如256-d）。然后这个特征分别送入两个全连接层，一个用于分类预测，另外一个用于回归窗口大小。总的步骤分为四步：（1）首先在ImageNet上预训练RPN，并在PASCAL VOC数据集上finetuning；（2）使用训练的PRN产生的region proposals单独训练一个Fast R-CNN模型，这个模型也先在ImageNet上预训练；（3）用Fast R-CNN的CNN模型部分（特征提取器）初始化RPN，然后对RPN中剩余层进行finetuning，此时Fast R-CNN与RPN的特征提取器是共享的；（4）固定特征提取器，对Fast R-CNN剩余层进行finetuning。
 * 优缺点：采用RPN代替启发式region proposal的方法，加快了训练速度和精度
-![Image](https://ss.csdn.net/p?https://mmbiz.qpic.cn/mmbiz_png/iaTa8ut6HiawDhWYblXp7Uqo1KKTNzCzzRJ3Jyia0gHwicqmMegTcanx4g1ZGHl7NS9ebDncXc4gbRgugK4QWqeUOQ/640?wx_fmt=png)
+![Image](https://s2.ax1x.com/2019/02/14/kDFUDf.png)
 
 #### 5.(2017) Mask R-CNN
 * 论文地址：https://arxiv.org/pdf/1703.06870.pdf
